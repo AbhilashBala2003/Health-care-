@@ -4,14 +4,23 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from datetime import datetime, date
 
-from .database import engine, SessionLocal, Base, get_db
-from .seed import seed_db
-from . import models, schemas, crud
+from contextlib import asynccontextmanager
+from api.database import engine, SessionLocal, Base, get_db
+from api.seed import seed_db
+from api import models, schemas, crud
 
-# Create tables
-Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create tables on startup (non-blocking for serverless functions boot, executes once database connection ready)
+    Base.metadata.create_all(bind=engine)
+    db = SessionLocal()
+    try:
+        seed_db(db)
+    finally:
+        db.close()
+    yield
 
-app = FastAPI(title="Nexgile-MediOracle Healthcare Workforce Portal API")
+app = FastAPI(title="Nexgile-MediOracle Healthcare Workforce Portal API", lifespan=lifespan)
 
 # Setup CORS
 app.add_middleware(
@@ -21,15 +30,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Startup event to seed database
-@app.on_event("startup")
-def startup_event():
-    db = SessionLocal()
-    try:
-        seed_db(db)
-    finally:
-        db.close()
 
 @app.get("/api")
 def read_root():

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta, date
-from . import models, database, crud, schemas
+from api import models, database, crud, schemas
 
 def seed_db(db: Session):
     # Check if we already have users in the DB
