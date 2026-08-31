@@ -284,7 +284,7 @@ def calculate_match(db: Session, professional: models.Professional, shift: model
         rate_score = 100.0
     else:
         # professional is too expensive for this shift
-        rate_score = max(100.0 + (rate_diff * 5), 20.0) # lose 5 points for every euro over
+        rate_score = max(100.0 + (rate_diff * 5), 20.0) # lose 5 points for every rupee over
         
     # Calculate final confidence percentage
     final_score = round((dist_score * 0.35) + (compliance_score * 0.40) + (rate_score * 0.25), 1)

@@ -6,7 +6,7 @@ import {
   UserRound, 
   Calendar, 
   Clock, 
-  Euro, 
+  IndianRupee, 
   CheckCircle2, 
   AlertTriangle, 
   XCircle, 
@@ -519,10 +519,10 @@ export default function App() {
                 </div>
 
                 <div className="col-4 glass-panel stat-card">
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Budget Allocation (Ireland HSE Cap)</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Budget Allocation (India Cap)</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                    <span className="stat-num">€{facilityDashboard.budget_spent}</span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>/ €{facilityDashboard.budget_cap}</span>
+                    <span className="stat-num">₹{facilityDashboard.budget_spent}</span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>/ ₹{facilityDashboard.budget_cap}</span>
                   </div>
                   <div style={{ background: 'var(--bg-secondary)', height: '6px', borderRadius: '3px', marginTop: '0.5rem', overflow: 'hidden' }}>
                     <div style={{ 
@@ -600,7 +600,7 @@ export default function App() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   <div className="form-group">
-                    <label className="form-label">Hourly Rate (€)</label>
+                    <label className="form-label">Hourly Rate (₹)</label>
                     <input 
                       type="number" 
                       step="0.5"
@@ -658,7 +658,7 @@ export default function App() {
                               {sDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                             </span>
                           </td>
-                          <td><span style={{ fontWeight: '600', color: 'white' }}>€{s.rate}/hr</span></td>
+                          <td><span style={{ fontWeight: '600', color: 'white' }}>₹{s.rate}/hr</span></td>
                           <td>
                             <span className={`badge badge-${s.status}`}>
                               {s.status}
@@ -717,7 +717,7 @@ export default function App() {
                           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <div style={{ textAlign: 'right' }}>
                               <div style={{ fontWeight: '700', color: 'var(--primary-hover)', fontSize: '0.9rem' }}>{o.match_score}% Match</div>
-                              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Rate: €{o.professional.hourly_rate}/hr</span>
+                              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Rate: ₹{o.professional.hourly_rate}/hr</span>
                             </div>
                             <span className="badge badge-open" style={{ fontSize: '0.65rem' }}>Offered</span>
                           </div>
@@ -844,7 +844,7 @@ export default function App() {
 
                   <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
                     <div>
-                      <div style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>€{professionalDashboard.total_earned}</div>
+                      <div style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>₹{professionalDashboard.total_earned}</div>
                       <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Total Earned</span>
                     </div>
                     <div>
@@ -916,7 +916,7 @@ export default function App() {
                       Compliance
                     </button>
                     <button className={`phone-nav-btn ${mobileTab === 'earnings' ? 'active' : ''}`} onClick={() => setMobileTab('earnings')}>
-                      <Euro size={18} />
+                      <IndianRupee size={18} />
                       Earnings
                     </button>
                   </div>
@@ -942,7 +942,7 @@ export default function App() {
                                     <div style={{ fontSize: '0.85rem', fontWeight: '700' }}>{o.shift.facility.name}</div>
                                     <div style={{ fontSize: '0.8rem', color: 'var(--primary-hover)', fontWeight: '600' }}>{o.shift.role_required} - {o.shift.specialty}</div>
                                   </div>
-                                  <span style={{ fontSize: '1rem', fontWeight: '800', color: 'white' }}>€{o.shift.rate}/hr</span>
+                                  <span style={{ fontSize: '1rem', fontWeight: '800', color: 'white' }}>₹{o.shift.rate}/hr</span>
                                 </div>
                                 
                                 <div style={{ margin: '0.5rem 0', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
@@ -1097,7 +1097,7 @@ export default function App() {
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div className="glass-panel" style={{ padding: '1rem', background: 'var(--bg-secondary)', textAlign: 'center' }}>
                               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Approved Shift Earnings</span>
-                              <div style={{ fontSize: '2rem', fontWeight: '800', margin: '0.25rem 0' }}>€{professionalDashboard.total_earned}</div>
+                              <div style={{ fontSize: '2rem', fontWeight: '800', margin: '0.25rem 0' }}>₹{professionalDashboard.total_earned}</div>
                               <span style={{ fontSize: '0.65rem', color: 'var(--accent-success)' }}>Updated: 1h ago</span>
                             </div>
 
@@ -1106,7 +1106,7 @@ export default function App() {
                                 <span style={{ fontSize: '0.8rem', fontWeight: '600' }}>Instant Cashout Balance</span>
                                 <span className="badge badge-open" style={{ fontSize: '0.6rem', background: 'rgba(0,191,255,0.1)' }}>Ready</span>
                               </div>
-                              <div style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '0.75rem' }}>€{professionalDashboard.instant_pay_eligible}</div>
+                              <div style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '0.75rem' }}>₹{professionalDashboard.instant_pay_eligible}</div>
                               
                               <button 
                                 className="btn btn-primary" 
@@ -1115,7 +1115,7 @@ export default function App() {
                                   if (professionalDashboard.instant_pay_eligible <= 0) {
                                     alert("No pending approved shifts eligible for instant payout.")
                                   } else {
-                                    alert(`Instant payout of €${professionalDashboard.instant_pay_eligible} successfully dispatched to your Irish bank account. Check your banking app in 5 minutes!`)
+                                    alert(`Instant payout of ₹${professionalDashboard.instant_pay_eligible} successfully dispatched to your bank account. Check your banking app in 5 minutes!`)
                                     fetchData()
                                   }
                                 }}
@@ -1217,7 +1217,7 @@ export default function App() {
                       <tr key={inv.id}>
                         <td style={{ fontWeight: '700' }}>{inv.invoice_number}</td>
                         <td>{inv.facility.name}</td>
-                        <td><span style={{ color: 'white', fontWeight: '600' }}>€{inv.total_amount}</span></td>
+                        <td><span style={{ color: 'white', fontWeight: '600' }}>₹{inv.total_amount}</span></td>
                         <td>{inv.issued_date}</td>
                         <td>
                           <span className={`badge ${inv.status === 'paid' ? 'badge-completed' : 'badge-open'}`}>
