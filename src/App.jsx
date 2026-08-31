@@ -107,6 +107,10 @@ export default function App() {
       const timesheetsData = await timesheetsRes.json()
       setTimesheets(timesheetsData)
 
+      const compDocsRes = await fetch('/api/compliance/docs')
+      const compDocsData = await compDocsRes.json()
+      setComplianceDocs(compDocsData)
+
       // Fetch dashboard depending on current active entities
       refreshDashboards(selectedFacilityId, selectedProfessionalId)
 
