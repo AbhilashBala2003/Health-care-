@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { 
-  Shield, 
-  MapPin, 
-  Building2, 
-  UserRound, 
-  Calendar, 
-  Clock, 
-  IndianRupee, 
-  CheckCircle2, 
-  AlertTriangle, 
-  XCircle, 
-  FileText, 
-  Zap, 
-  FileSpreadsheet, 
-  Compass, 
-  Briefcase, 
-  PlusCircle, 
+import {
+  Shield,
+  MapPin,
+  Building2,
+  UserRound,
+  Calendar,
+  Clock,
+  Euro,
+  CheckCircle2,
+  AlertTriangle,
+  XCircle,
+  FileText,
+  Zap,
+  FileSpreadsheet,
+  Compass,
+  Briefcase,
+  PlusCircle,
   ArrowRight,
   TrendingUp,
   Fingerprint,
@@ -35,7 +35,7 @@ export default function App() {
   // Seed states
   const [facilities, setFacilities] = useState([])
   const [professionals, setProfessionals] = useState([])
-  
+
   // Dashboard & Work Data States
   const [facilityDashboard, setFacilityDashboard] = useState(null)
   const [professionalDashboard, setProfessionalDashboard] = useState(null)
@@ -107,10 +107,6 @@ export default function App() {
       const timesheetsData = await timesheetsRes.json()
       setTimesheets(timesheetsData)
 
-      const compDocsRes = await fetch('/api/compliance/docs')
-      const compDocsData = await compDocsRes.json()
-      setComplianceDocs(compDocsData)
-
       // Fetch dashboard depending on current active entities
       refreshDashboards(selectedFacilityId, selectedProfessionalId)
 
@@ -150,8 +146,8 @@ export default function App() {
       }
 
       // Sync active confirmed shift for mobile professional
-      const activeSh = shifts.find(s => s.status === 'confirmed' && s.timesheet === null) || 
-                      shifts.find(s => s.status === 'in_progress')
+      const activeSh = shifts.find(s => s.status === 'confirmed' && s.timesheet === null) ||
+        shifts.find(s => s.status === 'in_progress')
       setActiveShift(activeSh || null)
 
     } catch (e) {
@@ -166,8 +162,8 @@ export default function App() {
 
   // Sync shifts when shifts state is updated
   useEffect(() => {
-    const activeSh = shifts.find(s => s.status === 'confirmed' && s.timesheet === null) || 
-                    shifts.find(s => s.status === 'in_progress')
+    const activeSh = shifts.find(s => s.status === 'confirmed' && s.timesheet === null) ||
+      shifts.find(s => s.status === 'in_progress')
     setActiveShift(activeSh || null)
   }, [shifts])
 
@@ -356,11 +352,11 @@ export default function App() {
     ctx.lineWidth = 3
     ctx.lineCap = 'round'
     ctx.strokeStyle = '#8b5cf6'
-    
+
     const rect = canvas.getBoundingClientRect()
     const x = (e.clientX || e.touches[0].clientX) - rect.left
     const y = (e.clientY || e.touches[0].clientY) - rect.top
-    
+
     ctx.beginPath()
     ctx.moveTo(x, y)
     setIsDrawing(true)
@@ -371,11 +367,11 @@ export default function App() {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
-    
+
     const rect = canvas.getBoundingClientRect()
     const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left
     const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top
-    
+
     ctx.lineTo(x, y)
     ctx.stroke()
   }
@@ -405,14 +401,14 @@ export default function App() {
 
         <div className="header-meta">
           <div className="role-tabs">
-            <button 
+            <button
               className={`role-tab ${activeRole === 'facility' ? 'active' : ''}`}
               onClick={() => setActiveRole('facility')}
             >
               <Building2 size={16} />
               Healthcare Facility
             </button>
-            <button 
+            <button
               className={`role-tab ${activeRole === 'professional' ? 'active' : ''}`}
               onClick={() => {
                 setActiveRole('professional')
@@ -422,7 +418,7 @@ export default function App() {
               <UserRound size={16} />
               Professional Mobile
             </button>
-            <button 
+            <button
               className={`role-tab ${activeRole === 'admin' ? 'active' : ''}`}
               onClick={() => setActiveRole('admin')}
             >
@@ -461,7 +457,7 @@ export default function App() {
         {/* 1. HEALTHCARE FACILITY PORTAL */}
         {activeRole === 'facility' && (
           <div className="dashboard-grid">
-            
+
             {/* Top row: Select Active Facility & Overview */}
             <div className="col-12 glass-panel" style={{ padding: '1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
@@ -470,8 +466,8 @@ export default function App() {
               </div>
               <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Selected Facility:</span>
-                <select 
-                  className="form-input" 
+                <select
+                  className="form-input"
                   style={{ width: '220px', padding: '0.45rem' }}
                   value={selectedFacilityId}
                   onChange={(e) => setSelectedFacilityId(Number(e.target.value))}
@@ -523,16 +519,16 @@ export default function App() {
                 </div>
 
                 <div className="col-4 glass-panel stat-card">
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Budget Allocation (India Cap)</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Budget Allocation (Ireland HSE Cap)</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                    <span className="stat-num">₹{facilityDashboard.budget_spent}</span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>/ ₹{facilityDashboard.budget_cap}</span>
+                    <span className="stat-num">€{facilityDashboard.budget_spent}</span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>/ €{facilityDashboard.budget_cap}</span>
                   </div>
                   <div style={{ background: 'var(--bg-secondary)', height: '6px', borderRadius: '3px', marginTop: '0.5rem', overflow: 'hidden' }}>
-                    <div style={{ 
-                      background: facilityDashboard.budget_spent > facilityDashboard.budget_cap * 0.9 ? 'var(--accent-danger)' : 'var(--accent-success)', 
-                      width: `${Math.min((facilityDashboard.budget_spent / facilityDashboard.budget_cap) * 100, 100)}%`, 
-                      height: '100%' 
+                    <div style={{
+                      background: facilityDashboard.budget_spent > facilityDashboard.budget_cap * 0.9 ? 'var(--accent-danger)' : 'var(--accent-success)',
+                      width: `${Math.min((facilityDashboard.budget_spent / facilityDashboard.budget_cap) * 100, 100)}%`,
+                      height: '100%'
                     }}></div>
                   </div>
                 </div>
@@ -548,10 +544,10 @@ export default function App() {
               <form onSubmit={handleCreateShift}>
                 <div className="form-group">
                   <label className="form-label">Required Role</label>
-                  <select 
+                  <select
                     className="form-input"
                     value={newShift.role_required}
-                    onChange={(e) => setNewShift({...newShift, role_required: e.target.value})}
+                    onChange={(e) => setNewShift({ ...newShift, role_required: e.target.value })}
                   >
                     <option value="Nurse">Nurse (Registered General)</option>
                     <option value="HCA">Healthcare Assistant (HCA)</option>
@@ -561,65 +557,65 @@ export default function App() {
 
                 <div className="form-group">
                   <label className="form-label">Specialty Unit</label>
-                  <input 
-                    type="text" 
-                    className="form-input" 
+                  <input
+                    type="text"
+                    className="form-input"
                     placeholder="e.g. ICU, Maternity, Emergency"
                     value={newShift.specialty}
-                    onChange={(e) => setNewShift({...newShift, specialty: e.target.value})}
+                    onChange={(e) => setNewShift({ ...newShift, specialty: e.target.value })}
                   />
                 </div>
 
                 <div className="form-group">
                   <label className="form-label">Department / Ward</label>
-                  <input 
-                    type="text" 
-                    className="form-input" 
+                  <input
+                    type="text"
+                    className="form-input"
                     placeholder="e.g. General Ward B"
                     value={newShift.budget_department}
-                    onChange={(e) => setNewShift({...newShift, budget_department: e.target.value})}
+                    onChange={(e) => setNewShift({ ...newShift, budget_department: e.target.value })}
                   />
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   <div className="form-group">
                     <label className="form-label">Start Time</label>
-                    <input 
-                      type="datetime-local" 
+                    <input
+                      type="datetime-local"
                       className="form-input"
                       value={newShift.date_time}
-                      onChange={(e) => setNewShift({...newShift, date_time: e.target.value})}
+                      onChange={(e) => setNewShift({ ...newShift, date_time: e.target.value })}
                     />
                   </div>
                   <div className="form-group">
                     <label className="form-label">End Time</label>
-                    <input 
-                      type="datetime-local" 
+                    <input
+                      type="datetime-local"
                       className="form-input"
                       value={newShift.end_time}
-                      onChange={(e) => setNewShift({...newShift, end_time: e.target.value})}
+                      onChange={(e) => setNewShift({ ...newShift, end_time: e.target.value })}
                     />
                   </div>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                   <div className="form-group">
-                    <label className="form-label">Hourly Rate (₹)</label>
-                    <input 
-                      type="number" 
+                    <label className="form-label">Hourly Rate (€)</label>
+                    <input
+                      type="number"
                       step="0.5"
                       className="form-input"
                       value={newShift.rate}
-                      onChange={(e) => setNewShift({...newShift, rate: Number(e.target.value)})}
+                      onChange={(e) => setNewShift({ ...newShift, rate: Number(e.target.value) })}
                     />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Unpaid Break (mins)</label>
-                    <input 
-                      type="number" 
+                    <input
+                      type="number"
                       className="form-input"
                       value={newShift.break_minutes}
-                      onChange={(e) => setNewShift({...newShift, break_minutes: Number(e.target.value)})}
+                      onChange={(e) => setNewShift({ ...newShift, break_minutes: Number(e.target.value) })}
                     />
                   </div>
                 </div>
@@ -633,7 +629,7 @@ export default function App() {
             {/* Center Col: Active Shifts Board */}
             <div className="col-8 glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
               <h3 style={{ marginBottom: '1.25rem' }}>Live Shifts Board</h3>
-              
+
               <div className="data-table-container">
                 <table className="data-table">
                   <thead>
@@ -659,10 +655,10 @@ export default function App() {
                           <td>
                             <div style={{ fontSize: '0.85rem' }}>{sDate.toLocaleDateString()}</div>
                             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                              {sDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                              {sDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </td>
-                          <td><span style={{ fontWeight: '600', color: 'white' }}>₹{s.rate}/hr</span></td>
+                          <td><span style={{ fontWeight: '600', color: 'white' }}>€{s.rate}/hr</span></td>
                           <td>
                             <span className={`badge badge-${s.status}`}>
                               {s.status}
@@ -670,8 +666,8 @@ export default function App() {
                           </td>
                           <td>
                             {s.status === 'open' && (
-                              <button 
-                                className="btn btn-secondary" 
+                              <button
+                                className="btn btn-secondary"
                                 style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem' }}
                                 onClick={() => handleViewMatches(s)}
                               >
@@ -679,8 +675,8 @@ export default function App() {
                               </button>
                             )}
                             {s.status === 'completed' && s.timesheet && s.timesheet.status === 'pending' && (
-                              <button 
-                                className="btn btn-success" 
+                              <button
+                                className="btn btn-success"
                                 style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem' }}
                                 onClick={() => handleVerifyTimesheet(s.timesheet.id, true)}
                               >
@@ -721,7 +717,7 @@ export default function App() {
                           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <div style={{ textAlign: 'right' }}>
                               <div style={{ fontWeight: '700', color: 'var(--primary-hover)', fontSize: '0.9rem' }}>{o.match_score}% Match</div>
-                              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Rate: ₹{o.professional.hourly_rate}/hr</span>
+                              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Rate: €{o.professional.hourly_rate}/hr</span>
                             </div>
                             <span className="badge badge-open" style={{ fontSize: '0.65rem' }}>Offered</span>
                           </div>
@@ -761,8 +757,8 @@ export default function App() {
                             <span>{ts.professional.name}</span>
                           </td>
                           <td>#{ts.shift.id} - {ts.shift.role_required} ({ts.shift.specialty})</td>
-                          <td>{cIn.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
-                          <td>{cOut.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+                          <td>{cIn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                          <td>{cOut.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                           <td>{ts.break_minutes} mins</td>
                           <td>
                             {ts.signature_base64 ? (
@@ -784,9 +780,9 @@ export default function App() {
                                 <button className="btn btn-success" style={{ padding: '0.3rem 0.5rem', fontSize: '0.75rem' }} onClick={() => handleVerifyTimesheet(ts.id, true)}>
                                   Approve
                                 </button>
-                                <button 
-                                  className="btn btn-danger" 
-                                  style={{ padding: '0.3rem 0.5rem', fontSize: '0.75rem' }} 
+                                <button
+                                  className="btn btn-danger"
+                                  style={{ padding: '0.3rem 0.5rem', fontSize: '0.75rem' }}
                                   onClick={() => {
                                     const reason = prompt("Enter dispute reason:")
                                     if (reason) handleVerifyTimesheet(ts.id, false, reason)
@@ -817,14 +813,14 @@ export default function App() {
         {/* 2. HEALTHCARE PROFESSIONAL MOBILE EXPERIENCE */}
         {activeRole === 'professional' && (
           <div className="dashboard-grid">
-            
+
             {/* Control Sidebar (Vetting simulator, role select) */}
             <div className="col-4 glass-panel" style={{ padding: '1.5rem' }}>
               <h3 style={{ marginBottom: '1.25rem' }}>Professional Profile Controller</h3>
               <div className="form-group">
                 <label className="form-label">Active Worker Account</label>
-                <select 
-                  className="form-input" 
+                <select
+                  className="form-input"
                   value={selectedProfessionalId}
                   onChange={(e) => setSelectedProfessionalId(Number(e.target.value))}
                 >
@@ -848,7 +844,7 @@ export default function App() {
 
                   <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
                     <div>
-                      <div style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>₹{professionalDashboard.total_earned}</div>
+                      <div style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>€{professionalDashboard.total_earned}</div>
                       <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Total Earned</span>
                     </div>
                     <div>
@@ -865,7 +861,7 @@ export default function App() {
               <form onSubmit={handleUploadDoc}>
                 <div className="form-group">
                   <label className="form-label">Document Type</label>
-                  <select 
+                  <select
                     className="form-input"
                     value={uploadDocType}
                     onChange={(e) => setUploadDocType(e.target.value)}
@@ -879,8 +875,8 @@ export default function App() {
 
                 <div className="form-group">
                   <label className="form-label">Expiry Date</label>
-                  <input 
-                    type="date" 
+                  <input
+                    type="date"
                     className="form-input"
                     value={uploadDocExpiry}
                     onChange={(e) => setUploadDocExpiry(e.target.value)}
@@ -897,7 +893,7 @@ export default function App() {
             <div className="col-8">
               <div className="phone-simulator">
                 <div className="phone-screen">
-                  
+
                   {/* Status Bar */}
                   <div className="phone-header">
                     <span>MediOracle Go</span>
@@ -920,14 +916,14 @@ export default function App() {
                       Compliance
                     </button>
                     <button className={`phone-nav-btn ${mobileTab === 'earnings' ? 'active' : ''}`} onClick={() => setMobileTab('earnings')}>
-                      <IndianRupee size={18} />
+                      <Euro size={18} />
                       Earnings
                     </button>
                   </div>
 
                   {/* Phone Body */}
                   <div className="phone-body">
-                    
+
                     {/* Tab 1: Discover Shift Feed */}
                     {mobileTab === 'discover' && (
                       <div className="fade-in">
@@ -946,9 +942,9 @@ export default function App() {
                                     <div style={{ fontSize: '0.85rem', fontWeight: '700' }}>{o.shift.facility.name}</div>
                                     <div style={{ fontSize: '0.8rem', color: 'var(--primary-hover)', fontWeight: '600' }}>{o.shift.role_required} - {o.shift.specialty}</div>
                                   </div>
-                                  <span style={{ fontSize: '1rem', fontWeight: '800', color: 'white' }}>₹{o.shift.rate}/hr</span>
+                                  <span style={{ fontSize: '1rem', fontWeight: '800', color: 'white' }}>€{o.shift.rate}/hr</span>
                                 </div>
-                                
+
                                 <div style={{ margin: '0.5rem 0', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                                     <MapPin size={10} />
@@ -956,7 +952,7 @@ export default function App() {
                                   </div>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '2px' }}>
                                     <Calendar size={10} />
-                                    {new Date(o.shift.date_time).toLocaleDateString()} @ {new Date(o.shift.date_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                    {new Date(o.shift.date_time).toLocaleDateString()} @ {new Date(o.shift.date_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                   </div>
                                 </div>
 
@@ -964,8 +960,8 @@ export default function App() {
                                   <span style={{ color: 'var(--secondary)', fontWeight: '600' }}>AI Explainer:</span> {o.explanation}
                                 </div>
 
-                                <button 
-                                  className="btn btn-primary" 
+                                <button
+                                  className="btn btn-primary"
                                   style={{ width: '100%', padding: '0.45rem', fontSize: '0.75rem', borderRadius: '6px' }}
                                   onClick={() => handleAcceptOffer(o.id)}
                                 >
@@ -982,7 +978,7 @@ export default function App() {
                     {mobileTab === 'active' && (
                       <div className="fade-in">
                         <h4 style={{ fontSize: '1rem', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>Shift execution tracker</h4>
-                        
+
                         {!activeShift ? (
                           <div style={{ padding: '2rem 1rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                             No active shift booked for today.
@@ -993,18 +989,18 @@ export default function App() {
                             <div style={{ fontSize: '0.8rem', color: 'var(--primary-hover)', fontWeight: '600', marginBottom: '0.5rem' }}>
                               {activeShift.role_required} - {activeShift.specialty}
                             </div>
-                            
+
                             {/* Simulated Dublin Map */}
                             <div className="map-canvas" style={{ margin: '0.75rem 0' }}>
                               <div className="map-grid-line" style={{ width: '100%', height: '1px', top: '30%' }}></div>
                               <div className="map-grid-line" style={{ width: '100%', height: '1px', top: '60%' }}></div>
                               <div className="map-grid-line" style={{ height: '100%', width: '1px', left: '40%' }}></div>
                               <div className="map-grid-line" style={{ height: '100%', width: '1px', left: '70%' }}></div>
-                              
+
                               {/* Facility Marker */}
                               <div className="map-marker-facility" style={{ top: '45%', left: '50%' }}></div>
                               <span style={{ position: 'absolute', top: '55%', left: '35%', fontSize: '0.6rem', background: '#000', padding: '1px 3px', borderRadius: '3px' }}>HSE St James</span>
-                              
+
                               {/* Professional Marker (GPS geofenced close by) */}
                               <div className="map-marker" style={{ top: '48%', left: '48%' }}></div>
                             </div>
@@ -1023,7 +1019,7 @@ export default function App() {
                                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '0.5rem' }}>
                                     <span>Clock-in Time:</span>
                                     <span style={{ fontWeight: '600', color: 'var(--accent-success)' }}>
-                                      {clockInTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                      {clockInTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </span>
                                   </div>
 
@@ -1038,17 +1034,17 @@ export default function App() {
                                       onTouchMove={draw}
                                       onTouchEnd={stopDrawing}
                                     >
-                                      <canvas 
-                                        ref={canvasRef} 
-                                        width={320} 
-                                        height={140} 
+                                      <canvas
+                                        ref={canvasRef}
+                                        width={320}
+                                        height={140}
                                         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                                       />
                                       <span className="signature-prompt">Draw Sign here</span>
                                     </div>
-                                    <button 
-                                      type="button" 
-                                      className="btn btn-secondary" 
+                                    <button
+                                      type="button"
+                                      className="btn btn-secondary"
                                       style={{ padding: '0.2rem 0.5rem', fontSize: '0.65rem', marginTop: '0.25rem', borderRadius: '4px' }}
                                       onClick={clearCanvas}
                                     >
@@ -1071,7 +1067,7 @@ export default function App() {
                     {mobileTab === 'compliance' && (
                       <div className="fade-in">
                         <h4 style={{ fontSize: '1rem', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>Vetting Documentation</h4>
-                        
+
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                           {complianceDocs.length === 0 ? (
                             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Loading documents...</p>
@@ -1096,12 +1092,12 @@ export default function App() {
                     {mobileTab === 'earnings' && (
                       <div className="fade-in">
                         <h4 style={{ fontSize: '1rem', marginBottom: '0.75rem', fontFamily: 'var(--font-display)' }}>Earnings Console</h4>
-                        
+
                         {professionalDashboard && (
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div className="glass-panel" style={{ padding: '1rem', background: 'var(--bg-secondary)', textAlign: 'center' }}>
                               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Approved Shift Earnings</span>
-                              <div style={{ fontSize: '2rem', fontWeight: '800', margin: '0.25rem 0' }}>₹{professionalDashboard.total_earned}</div>
+                              <div style={{ fontSize: '2rem', fontWeight: '800', margin: '0.25rem 0' }}>€{professionalDashboard.total_earned}</div>
                               <span style={{ fontSize: '0.65rem', color: 'var(--accent-success)' }}>Updated: 1h ago</span>
                             </div>
 
@@ -1110,16 +1106,16 @@ export default function App() {
                                 <span style={{ fontSize: '0.8rem', fontWeight: '600' }}>Instant Cashout Balance</span>
                                 <span className="badge badge-open" style={{ fontSize: '0.6rem', background: 'rgba(0,191,255,0.1)' }}>Ready</span>
                               </div>
-                              <div style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '0.75rem' }}>₹{professionalDashboard.instant_pay_eligible}</div>
-                              
-                              <button 
-                                className="btn btn-primary" 
+                              <div style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '0.75rem' }}>€{professionalDashboard.instant_pay_eligible}</div>
+
+                              <button
+                                className="btn btn-primary"
                                 style={{ width: '100%', padding: '0.5rem', fontSize: '0.75rem', background: 'var(--secondary)', border: 'none', boxShadow: 'none' }}
                                 onClick={() => {
                                   if (professionalDashboard.instant_pay_eligible <= 0) {
                                     alert("No pending approved shifts eligible for instant payout.")
                                   } else {
-                                    alert(`Instant payout of ₹${professionalDashboard.instant_pay_eligible} successfully dispatched to your bank account. Check your banking app in 5 minutes!`)
+                                    alert(`Instant payout of €${professionalDashboard.instant_pay_eligible} successfully dispatched to your Irish bank account. Check your banking app in 5 minutes!`)
                                     fetchData()
                                   }
                                 }}
@@ -1144,7 +1140,7 @@ export default function App() {
         {/* 3. PLATFORM OPERATIONS CONSOLE */}
         {activeRole === 'admin' && (
           <div className="dashboard-grid">
-            
+
             <div className="col-12 glass-panel" style={{ padding: '1.25rem' }}>
               <h2>MediOracle Agency Operations & Regulator Panel</h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>Verify compliance credentials, audit AI score match explanation pipelines, and process billing invoices</p>
@@ -1156,7 +1152,7 @@ export default function App() {
                 <Shield className="brand-logo" size={20} />
                 Regulator Compliance Registry (Pending Queue)
               </h3>
-              
+
               {complianceQueue.length === 0 ? (
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Compliance registry queue is currently empty.</p>
               ) : (
@@ -1221,7 +1217,7 @@ export default function App() {
                       <tr key={inv.id}>
                         <td style={{ fontWeight: '700' }}>{inv.invoice_number}</td>
                         <td>{inv.facility.name}</td>
-                        <td><span style={{ color: 'white', fontWeight: '600' }}>₹{inv.total_amount}</span></td>
+                        <td><span style={{ color: 'white', fontWeight: '600' }}>€{inv.total_amount}</span></td>
                         <td>{inv.issued_date}</td>
                         <td>
                           <span className={`badge ${inv.status === 'paid' ? 'badge-completed' : 'badge-open'}`}>
@@ -1249,7 +1245,7 @@ export default function App() {
         )}
 
       </main>
-      
+
       {/* Footer */}
       <footer style={{ padding: '2rem', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted)', borderTop: '1px solid var(--border-color)', marginTop: 'auto' }}>
         Nexgile-MediOracle Healthcare Portal © 2026. Built with React, FastAPI, SQLite & Vercel.

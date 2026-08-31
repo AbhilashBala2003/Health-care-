@@ -2,7 +2,7 @@ import math
 from sqlalchemy.orm import Session
 from datetime import datetime, date
 from typing import Optional
-from api import models, schemas
+from . import models, schemas
 
 # --- User CRUD ---
 def get_user(db: Session, user_id: int):
@@ -284,7 +284,7 @@ def calculate_match(db: Session, professional: models.Professional, shift: model
         rate_score = 100.0
     else:
         # professional is too expensive for this shift
-        rate_score = max(100.0 + (rate_diff * 5), 20.0) # lose 5 points for every rupee over
+        rate_score = max(100.0 + (rate_diff * 5), 20.0) # lose 5 points for every euro over
         
     # Calculate final confidence percentage
     final_score = round((dist_score * 0.35) + (compliance_score * 0.40) + (rate_score * 0.25), 1)
@@ -316,9 +316,10 @@ def get_offers_for_shift(db: Session, shift_id: int):
     return db.query(models.Offer).filter(models.Offer.shift_id == shift_id).order_by(models.Offer.match_score.desc()).all()
 
 def get_offers_for_professional(db: Session, professional_id: int):
-    return db.query(models.Offer).filter(
+    return db.query(models.Offer).join(models.Shift).filter(
         models.Offer.professional_id == professional_id,
-        models.Offer.status == "sent"
+        models.Offer.status == "sent",
+        models.Shift.status == "open"
     ).all()
 
 def accept_offer(db: Session, offer_id: int):
