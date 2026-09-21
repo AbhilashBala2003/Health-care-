@@ -11,7 +11,7 @@ from . import models, schemas, crud
 # Create tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Nexgile-MediOracle Healthcare Workforce Portal API")
+app = FastAPI(title="Abi-MediOracle Healthcare Workforce Portal API")
 
 # Setup CORS
 app.add_middleware(
@@ -35,7 +35,7 @@ def startup_event():
 def read_root():
     return {
         "status": "online",
-        "portal": "Nexgile-MediOracle Healthcare Workforce API",
+        "portal": "Abi-MediOracle Healthcare Workforce API",
         "version": "1.0.0",
         "docs_url": "/docs"
     }

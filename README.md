@@ -1,4 +1,4 @@
-# Nexgile MediOracle - Healthcare Workforce Portal
+# Abi MediOracle - Healthcare Workforce Portal
 
 An end-to-end Healthcare Workforce Management and Shift Booking platform built with **React (Vite)** on the frontend and **FastAPI (Python)** on the backend. Designed for healthcare facilities, medical professionals (nurses, doctors, caregivers), and system administrators.
 

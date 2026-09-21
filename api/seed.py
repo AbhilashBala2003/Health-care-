@@ -12,7 +12,7 @@ def seed_db(db: Session):
     # 1. Create Users
     # Structure: UserCreate(email, password, role)
     users_data = [
-        ("admin@nexgile.com", "admin123", "admin"),
+        ("admin@abi.com", "admin123", "admin"),
         ("stjames@hse.ie", "james123", "facility"),
         ("beacon@clinic.ie", "beacon123", "facility"),
         ("sarah.nurse@gmail.com", "sarah123", "professional"),

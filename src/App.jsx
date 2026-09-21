@@ -317,7 +317,7 @@ export default function App() {
         body: JSON.stringify({
           professional_id: selectedProfessionalId,
           doc_type: uploadDocType,
-          doc_url: `https://nexgile-storage.com/${uploadDocType.toLowerCase().replace(' ', '_')}.pdf`,
+          doc_url: `https://abi-storage.com/${uploadDocType.toLowerCase().replace(' ', '_')}.pdf`,
           expiry_date: uploadDocExpiry
         })
       })
@@ -394,7 +394,7 @@ export default function App() {
         <div className="brand-section">
           <Shield className="brand-logo" size={32} />
           <div>
-            <h1 className="brand-title">Nexgile-MediOracle</h1>
+            <h1 className="brand-title">Abi-MediOracle</h1>
             <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>AI-POWERED HEALTHCARE WORKFORCE PORTAL</p>
           </div>
         </div>
@@ -1248,7 +1248,7 @@ export default function App() {
 
       {/* Footer */}
       <footer style={{ padding: '2rem', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted)', borderTop: '1px solid var(--border-color)', marginTop: 'auto' }}>
-        Nexgile-MediOracle Healthcare Portal © 2026. Built with React, FastAPI, SQLite & Vercel.
+        Abi-MediOracle Healthcare Portal © 2026. Built with React, FastAPI, SQLite & Vercel.
       </footer>
     </div>
   )
